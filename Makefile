@@ -29,4 +29,8 @@ uv:
 	@bash scripts/setup.sh
 
 
-.PHONY: lint format ruff uv
+clean:
+	rm -rf lightning_logs/*
+	rm -rf logs/train/*
+
+.PHONY: lint format ruff uv clean

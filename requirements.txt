@@ -1,5 +1,5 @@
 torch>=2.3.0
-lightning>=2.5.0
+lightning[extra]>=2.5.0
 transformers>=4.49.0
 datasets
 accelerate
@@ -15,3 +15,6 @@ numpy
 pandas
 scikit-learn
 umap
+click
+tensorboard
+torchmetrics
