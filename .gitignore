@@ -66,3 +66,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+
+# data related
+data/raw/

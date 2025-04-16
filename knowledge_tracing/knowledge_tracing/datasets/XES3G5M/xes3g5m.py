@@ -2,9 +2,8 @@ import lightning as pl
 import numpy as np
 import pandas as pd
 import torch
-from torch.utils.data import DataLoader, Dataset
-
 from datasets import load_dataset
+from torch.utils.data import DataLoader, Dataset
 
 
 class XES3G5MDataModuleConfig:

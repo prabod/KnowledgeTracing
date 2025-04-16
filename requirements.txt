@@ -7,3 +7,11 @@ ruff
 ujson
 jupyterlab>3.0
 pydantic
+ipykernel
+tqdm
+matplotlib
+seaborn
+numpy
+pandas
+scikit-learn
+umap
