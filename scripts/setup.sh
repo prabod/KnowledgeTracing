@@ -11,7 +11,7 @@ if ! command -v uv &> /dev/null; then
 fi
 
 # Create a new virtual environment
-uv venv
+uv venv --python 3.11.6
 
 # Activate the virtual environment
 source .venv/bin/activate
@@ -19,5 +19,7 @@ source .venv/bin/activate
 # Install dependencies using uv pip
 uv pip install -r requirements.txt
 
+# Install the knowledge tracing package
+uv pip install -e knowledge_tracing
 
 echo "UV environment setup complete!"
