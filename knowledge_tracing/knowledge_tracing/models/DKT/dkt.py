@@ -66,6 +66,7 @@ class DKTLightningModule(pl.LightningModule):
         self.model = DKTModel(self.input_dim, self.hidden_dim)
         self.criterion = nn.BCELoss(reduction="none")
         self.val_auc = BinaryAUROC()
+        self.test_auc = BinaryAUROC()
 
     def forward(self, x):
         """
@@ -135,6 +136,20 @@ class DKTLightningModule(pl.LightningModule):
 
         return loss
 
+    def test_step(self, batch, batch_idx):
+        """
+        Test step of the DKT model.
+        """
+        x, y, mask = self.prepare_batch(batch)
+        y_pred = self(x)
+        loss = self.compute_loss(y_pred, y, mask)
+        self.log("test/loss", loss, prog_bar=True, on_step=True, on_epoch=True)
+        preds_flat = y_pred[mask.bool()]
+        labels_flat = y[mask.bool()]
+        if labels_flat.numel() > 0:
+            self.test_auc.update(preds_flat, labels_flat.int())
+        return loss
+
     def configure_optimizers(self):
         """
         Configure the optimizer, learning rate scheduler, and gradient clipping.
@@ -157,3 +172,8 @@ class DKTLightningModule(pl.LightningModule):
         auc = self.val_auc.compute()
         self.log("val/auc", auc, prog_bar=True)
         self.val_auc.reset()
+
+    def on_test_epoch_end(self):
+        auc = self.test_auc.compute()
+        self.log("test/auc", auc, prog_bar=True)
+        self.test_auc.reset()
