@@ -155,14 +155,14 @@ class DKTLightningModuleWithInteraction(pl.LightningModule):
         ]
 
         q_sequences = pad_sequence(q_sequences, batch_first=True, padding_value=-1)
-        r_sequences = pad_sequence(r_sequences, batch_first=True, padding_value=0)
+        r_sequences = pad_sequence(r_sequences, batch_first=True, padding_value=-1)
         q_sequences_rshifted = pad_sequence(
             q_sequences_rshifted, batch_first=True, padding_value=-1
         )
         r_sequences_rshifted = pad_sequence(
-            r_sequences_rshifted, batch_first=True, padding_value=0
+            r_sequences_rshifted, batch_first=True, padding_value=-1
         )
-        new_mask = (q_sequences != -1) * (r_sequences != 0)
+        new_mask = (q_sequences != -1) * (r_sequences != -1)
 
         q_sequences = q_sequences * new_mask
         r_sequences = r_sequences * new_mask
