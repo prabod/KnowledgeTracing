@@ -4,7 +4,7 @@ export
 
 # Version for production deployment
 VERSION := 0.0.1
-
+REPEAT := 10
 
 # Colors for terminal output
 RED := \033[0;31m
@@ -28,5 +28,14 @@ uv:
 	@echo "$(GREEN)Setting up UV environment...$(NC)"
 	@bash scripts/setup.sh
 
+train:
+	python train.py --use-previous-responses true --lr 0.01 --repeat $(REPEAT) --max-epochs 20
 
-.PHONY: lint format ruff uv
+train-with-interaction:
+	python train.py --use-previous-responses true --lr 0.01 --repeat $(REPEAT) --max-epochs 20 --with-interaction true
+
+clean:
+	rm -rf lightning_logs/*
+	rm -rf logs/train/*
+
+.PHONY: lint format ruff uv clean train train-with-interaction

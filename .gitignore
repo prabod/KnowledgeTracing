@@ -69,3 +69,8 @@ cover/
 
 # data related
 data/raw/
+
+# lightning
+lightning_logs/
+
+logs/train/*

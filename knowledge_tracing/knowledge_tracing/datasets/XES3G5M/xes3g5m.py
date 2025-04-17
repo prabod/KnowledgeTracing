@@ -17,6 +17,7 @@ class XES3G5MDataModuleConfig:
     padding_value: int = -1
     batch_size: int = 64
     val_fold: int = 4
+    num_workers: int = 16
 
 
 class XES3G5MDataset(Dataset):
@@ -75,6 +76,7 @@ class XES3G5MDataModule(pl.LightningDataModule):
         self.val_fold = config.val_fold
         self.max_seq_length = config.max_seq_length
         self.padding_value = config.padding_value
+        self.num_workers = config.num_workers
 
     def prepare_data(self) -> None:
         """
@@ -202,6 +204,7 @@ class XES3G5MDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=True,
             collate_fn=self._collate_fn,
+            num_workers=self.num_workers,
         )
 
     def val_dataloader(self) -> DataLoader:
@@ -210,6 +213,7 @@ class XES3G5MDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=False,
             collate_fn=self._collate_fn,
+            num_workers=self.num_workers,
         )
 
     def test_dataloader(self) -> DataLoader:
@@ -217,4 +221,5 @@ class XES3G5MDataModule(pl.LightningDataModule):
             self.test_dataset,
             batch_size=self.batch_size,
             collate_fn=self._collate_fn,
+            num_workers=self.num_workers,
         )
